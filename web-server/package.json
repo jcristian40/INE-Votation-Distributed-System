@@ -1,0 +1,13 @@
+{
+  "name": "web-udp-server",
+  "version": "1.0.0",
+  "description": "Web and UDP node server",
+  "keywords": [
+    "udp",
+    "node",
+    "web"
+  ],
+  "author": "sguerra",
+  "license": "MIT",
+  "private": true
+}
