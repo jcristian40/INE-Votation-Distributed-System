@@ -1,20 +1,31 @@
-var port = 7777;
-var host = "127.0.0.1";
+
+var servers = {
+	udp: {
+		host: "127.0.0.1",
+		port: 7777
+	},
+	http: {
+		host: "127.0.0.1",
+		port: 8080
+	}
+}
+
+// UDP Server
 
 var dgram = require("dgram");
-var server = dgram.createSocket("udp4"); 
+var udpServer = dgram.createSocket("udp4"); 
 
-server.on("error",function(err){
+udpServer.on("error",function(err){
 	console.log("Server error:\n", err.stack);
-	server.close();
+	udpServer.close();
 });
 
-server.on("listening", function(){
-	var address = server.address();
-	console.log("Server listening ", address.address, ":", address.port);
+udpServer.on("listening", function(){
+	var address = udpServer.address();
+	console.log("UDP Server listening ", address.address, ":", address.port);
 });
 
-server.on("message", function(msg, rinfo){
+udpServer.on("message", function(msg, rinfo){
 	console.log("message: ", msg, rinfo.address, ":", rinfo.port);
 
 	var res = new Buffer('OK');
@@ -25,4 +36,17 @@ server.on("message", function(msg, rinfo){
 
 });
 
-server.bind(port, host);
+udpServer.bind(servers.udp.port, servers.udp.host);
+
+// HTTP Server
+
+var http = require('http');
+
+var httpServer = http.createServer(function(req, res){
+	res.writeHead(200, 'Content-Type: text/json');
+	res.end('{}');
+});
+
+httpServer = httpServer.listen(servers.http.port, servers.http.host);
+
+console.log("HTTP Server listening ", servers.http.host, ":", servers.http.port);
