@@ -1,14 +1,7 @@
+var config = require('./config.json');
 
-var servers = {
-	udp: {
-		host: "127.0.0.1",
-		port: 7777
-	},
-	http: {
-		host: "127.0.0.1",
-		port: 8080
-	}
-}
+var udp_config = config.udp;
+var http_config = config.http;
 
 var votes = [];
 var status = {
@@ -36,7 +29,7 @@ udpServer.on("message", function(msg, rinfo){
 	votes.push({id: votes.length});
 
 	status.total++;
-	io.emit('vote', status);
+	socket.emit('vote', status);
 	
 	var res = new Buffer('OK');
 	var client = dgram.createSocket("udp4");
@@ -46,11 +39,12 @@ udpServer.on("message", function(msg, rinfo){
 
 });
 
-udpServer.bind(servers.udp.port, servers.udp.host);
+udpServer.bind(udp_config.port, udp_config.host);
 
 // HTTP Server
 
 var http = require('http');
+var io = require('socket.io');
 
 var httpServer = http.createServer(function(req, res){
 	res.writeHead(200, 'Content-Type: text/html');
@@ -75,8 +69,7 @@ var httpServer = http.createServer(function(req, res){
 	res.end(html);
 });
 
-var io = require('socket.io')(httpServer);
+var socket = io(httpServer);
 
-httpServer = httpServer.listen(servers.http.port, servers.http.host);
-
-console.log("HTTP Server listening ", servers.http.host, ":", servers.http.port);
+httpServer = httpServer.listen(http_config.port, http_config.host);
+console.log("HTTP Server listening ", http_config.host, ":", http_config.port);
