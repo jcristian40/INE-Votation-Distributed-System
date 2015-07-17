@@ -1,0 +1,242 @@
+body{
+    background-color: white;
+    color: white;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+body * {
+    box-sizing: border-box;
+}
+
+h1{
+    text-align: center;
+    background-color: rgb(255, 23, 194);
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: .3em 0;
+    color: white;
+}
+
+h1 span{
+    color: #000;
+}
+
+h2{
+    text-align: right;
+}
+
+h2 span{
+    width: 300px;
+    background-color: rgb(255, 23, 194);
+    border-radius: 10px 0 0 10px;
+    border: 2px solid rgb(208, 20, 158);
+    padding: .25em;
+    color: white;
+    display: inline-block;
+    text-align: center;
+}
+
+article section{
+    padding: 0;
+    background-color: #333;
+}
+
+.profile-icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 4px solid white;
+    position: relative;
+    background-color: whitesmoke;
+    background-size: cover;
+}
+
+.party-icon-mini{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid white;
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    background-color: whitesmoke;
+    background-size: cover;
+}
+
+.profile-icon:before{
+    line-height: 50px;
+    content: attr(data-position);
+    position: relative;
+    left: -50px;
+    font-size: 56px;
+}
+
+.profile-name{
+    line-height: 50px;
+    margin-left: .5em;
+}
+
+.input{
+    width: 300px;
+    height: 40px;
+    background-color: #333;
+    border: 2px solid #333;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: .5em;
+}
+
+.input .input-icon{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 40px;
+    line-height: 40px;
+    width: 90px;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+}
+
+.input [type=text]{
+    height: 38px;
+    width: 208px;
+    margin-left: 90px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding-left: .5em;
+    padding-right: .5em;
+}
+
+
+#chart-container, #wrp-positions, .profile-icon, .profile-name, .profile-position{
+    display: inline-block;
+    vertical-align: top;
+}
+
+#results{
+    padding-top: 1em;
+}
+
+#results h2{
+    margin-top: 0;
+}
+
+#chart-container{
+    width: 500px;
+    height: 350px;
+}
+
+#chart-container figure{
+    width: 380px;
+    height: 380px;
+    background-color: gray;
+    border-radius: 50%;
+    position: relative;
+    top: -74px;
+    left: 20px;
+}
+
+#wrp-positions{
+    margin-left: 40px;
+    height: 300px;
+}
+
+#positions{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 300px;
+}
+
+#positions li{
+    list-style: none;
+    min-height: 50px;
+    width: 300px;
+    margin-top: 1em;
+}
+
+#search{
+    background-color: white;
+    height: 300px;
+    color: #333;
+    padding-top: .5em;
+}
+
+#search h2{
+    color: white;
+    text-align: left;
+}
+
+#search h2 span{
+    border-radius: 0 10px 10px 0;
+}
+
+#search form{
+    margin: 1em;
+    width: 300px;
+    text-align: right;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#search button{
+    width: 140px;
+    height: 40px;
+    background-color: rgb(255, 23, 194);
+    border: 2px solid rgb(208, 20, 158);
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+}
+
+#search-result, #no-result{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 200px;
+    height: 300px;
+}
+
+#search-result{
+
+}
+
+#search-result .profile-icon{
+    width: 150px;
+    height: 150px;
+    border-color: #333;
+}
+
+#search-result .party-icon-mini{
+    width: 50px;
+    height: 50px;
+    border-color: #333;
+}
+
+#search-result .profile-icon:before{
+    display: none;
+}
+
+#search-result p{
+    margin-top: 0;
+    line-height: 30px;
+}
+
+#search-result strong{
+    font-weight: bold;
+}
+
+#search-result .profile-name{
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+#no-result{
+    font-size: 30px;
+    display: none;
+}
