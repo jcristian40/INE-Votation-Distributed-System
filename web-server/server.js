@@ -3,6 +3,8 @@ var config = require('./config.json');
 var udp_config = config.udp;
 var http_config = config.http;
 
+// Votation Dynamics
+
 var votes = new Map();
 var votation = {
 	total : 0,
@@ -21,6 +23,11 @@ var votation = {
 	}
 };
 
+
+var updateVote = function(){
+	socket.emit('update', votation);
+}
+
 var appendVote = function(vote){
 
 	votation.total++;
@@ -37,8 +44,10 @@ var appendVote = function(vote){
 		votation.votes[vote.party]++;
 	}
 
-	socket.emit('vote', votation);
-} 
+	updateVote();
+}
+
+setInterval(updateVote, 1000);
 
 // UDP Server
 
@@ -78,27 +87,16 @@ udpServer.bind(udp_config.port, udp_config.host);
 var http = require('http');
 var io = require('socket.io');
 
+var static = require('node-static');
+var fileServer = new static.Server('./public');
+
 var httpServer = http.createServer(function(req, res){
-	res.writeHead(200, 'Content-Type: text/html');
 
-	var html = '<!DOCTYPE html>';
-	html += '<html>';
-	html += '	<head>';
-	html += '		<meta charset="UTF-8">';
-	html += '		<script src="https://cdn.socket.io/socket.io-1.3.6.js"></script>';
-	html += '		<script type="text/javascript">';
-	html += '			var socket = io("http://localhost:8080");';
-	html += '			socket.on("vote", function(data){';
-	html += '				document.getElementById("content").innerHTML = JSON.stringify(data);';
-	html += '			});';
-	html += '		</script>';
-	html += '	</head>';
-	html += '	<body>';
-	html += '		<div id="content">'+JSON.stringify(votation)+'</div>';
-	html += '	</body>';
-	html += '</html>';
+	req.addListener('end', function(){
 
-	res.end(html);
+		fileServer.serve(req, res);	
+	
+	}).resume();;
 });
 
 var socket = io(httpServer);
