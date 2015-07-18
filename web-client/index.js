@@ -1,8 +1,8 @@
 var APP = {
     positionList : null,
     chart : null,
-    socketURL : 'http://192.168.0.7:8080',
-    httpURL : 'http://192.168.0.7:8081',
+    socketURL : 'http://localhost:8080',
+    httpURL : 'http://localhost:8081',
     socket : null,
     parties : PARTIES_DATA
 }
