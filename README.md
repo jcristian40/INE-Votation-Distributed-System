@@ -83,9 +83,12 @@ Client that listens **web server** updates from votation through [socket.io](htt
 }
 ```
 
-
 ### Running
 
 - ``static -a 0.0.0.0 -p 8082``
 - Visit app at [http://localhost:8082](http://localhost:8082)
+
+### Preview
+
+<img src="./web-client/screenshot.png" width="100%;"/>
 
