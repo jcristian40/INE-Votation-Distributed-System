@@ -24,18 +24,22 @@ Server that listens UDP request from votation and sends updates to **web clients
 ### Configuration
 
 - open `config.json` file
-- update `udp` and `http` default server settings
+- update `udp`, `http` and `express` default server settings
 
 
 ```
 {
 	"udp": {
-		"host": "127.0.0.1",
+		"host": "0.0.0.0",
 		"port": 7777
 	},
 	"http": {
-		"host": "127.0.0.1",
+		"host": "0.0.0.0",
 		"port": 8080
+	},
+	"express": {
+		"host": "0.0.0.0",
+		"port": 8081
 	}
 }
 ```
