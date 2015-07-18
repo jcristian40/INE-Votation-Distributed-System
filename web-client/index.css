@@ -122,6 +122,13 @@ article section{
     padding-right: .5em;
 }
 
+.ct-label{
+    fill: #333;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 #chart-container, #wrp-positions, .profile-icon, .profile-name, .profile-position{
     display: inline-block;
     vertical-align: top;
@@ -143,7 +150,7 @@ article section{
 #chart-container figure{
     width: 380px;
     height: 380px;
-    background-color: gray;
+    background-color: white;
     border-radius: 50%;
     position: relative;
     top: -24px;
@@ -254,5 +261,4 @@ article section{
 
 #no-result{
     font-size: 30px;
-    display: none;
 }

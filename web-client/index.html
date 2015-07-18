@@ -3,8 +3,12 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
         <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="./index.css">
+        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+        <script src="https://cdn.socket.io/socket.io-1.3.6.js"></script>
+        <script src="./data.js"></script>
         <script src="./index.js"></script>
     </head>
     <body>
@@ -105,37 +109,17 @@
                 </h2>
                 <form>
                     <div class="input">
-                        <span class="input-icon">RFC</span>
-                        <input type="text" name="name" value="">
+                        <span class="input-icon">CURP</span>
+                        <input type="text" name="curp" id="txt-curp" value="" required>
                     </div>
                     <div class="input">
                         <span class="input-icon">Teléfono</span>
-                        <input type="text" name="name" value="">
+                        <input type="text" name="telephone" id="txt-phone" value="" required>
                     </div>
-                    <button type="button" name="button">Buscar</button>
+                    <button type="submit" name="button">Buscar</button>
                 </form>
                 <div id="search-result">
-                    <div class="profile-icon" data-position="1">
-                        <div class="party-icon-mini"></div>
-                    </div>
-                    <div class="profile-name">
-                        <p>
-                            <strong>Partido:</strong>
-                            <span id="party-name">Nombre del partido</span>
-                        </p>
-                        <p>
-                            <strong>RFC:</strong>
-                            <span id="rfc">Clave RFC</span>
-                        </p>
-                        <p>
-                            <strong>Teléfono:</strong>
-                            <span id="phone">Teléfono celular</span>
-                        </p>
 
-                    </div>
-                </div>
-                <div id="no-result">
-                    No se encontró ningún resultado
                 </div>
 
             </section>
