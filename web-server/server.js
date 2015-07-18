@@ -3,10 +3,42 @@ var config = require('./config.json');
 var udp_config = config.udp;
 var http_config = config.http;
 
-var votes = [];
-var status = {
-	total : 0
+var votes = new Map();
+var votation = {
+	total : 0,
+	votes: {
+		"PRI": 0,
+		"PAN": 0,
+		"PRD": 0,
+		"P_T": 0,
+		"VDE": 0,
+		"MVC": 0,
+		"NVA": 0,
+		"MOR": 0,
+		"HUM": 0,
+		"ENC": 0,
+		"FRD": 0
+	}
 };
+
+var appendVote = function(vote){
+
+	votation.total++;
+
+	if(votes.has(vote.curp) && votes.has(vote.rfc)){
+
+		votation.votes["FRD"]++;
+
+	}else{
+
+		votes.set(vote.curp, vote);
+		votes.set(vote.rfc, vote);
+
+		votation.votes[vote.party]++;
+	}
+
+	socket.emit('vote', votation);
+} 
 
 // UDP Server
 
@@ -24,15 +56,15 @@ udpServer.on("listening", function(){
 });
 
 udpServer.on("message", function(msg, rinfo){
-	console.log("message: ", msg, rinfo.address, ":", rinfo.port);
 
-	votes.push({id: votes.length});
+	var vote = JSON.parse(msg.toString());
+	console.log("received message from: ",rinfo.address, ":", rinfo.port);
 
-	status.total++;
-	socket.emit('vote', status);
+	appendVote(vote);
 	
 	var res = new Buffer('OK');
 	var client = dgram.createSocket("udp4");
+
 	client.send(res, 0, res.length, rinfo.port, rinfo.host, function(err, bytes){
 		client.close();
 	});
@@ -62,7 +94,7 @@ var httpServer = http.createServer(function(req, res){
 	html += '		</script>';
 	html += '	</head>';
 	html += '	<body>';
-	html += '		<div id="content">'+JSON.stringify(status)+'</div>';
+	html += '		<div id="content">'+JSON.stringify(votation)+'</div>';
 	html += '	</body>';
 	html += '</html>';
 
