@@ -2,6 +2,7 @@ var config = require('./config.json');
 
 var udp_config = config.udp;
 var http_config = config.http;
+var express_config = config.express;
 
 // Votation Dynamics
 
@@ -39,7 +40,7 @@ var appendVote = function(vote){
 	}else{
 
 		votes.set(vote.curp, vote);
-		votes.set(vote.rfc, vote);
+		votes.set(vote.phone, vote);
 
 		votation.votes[vote.party]++;
 	}
@@ -66,17 +67,25 @@ udpServer.on("listening", function(){
 
 udpServer.on("message", function(msg, rinfo){
 
-	var vote = JSON.parse(msg.toString());
-	console.log("received message from: ",rinfo.address, ":", rinfo.port);
+	try{
 
-	appendVote(vote);
-	
-	var res = new Buffer('OK');
-	var client = dgram.createSocket("udp4");
+		var vote = JSON.parse(msg.toString());
+		console.log("received message from: ", rinfo.address, ":", rinfo.port);
 
-	client.send(res, 0, res.length, rinfo.port, rinfo.host, function(err, bytes){
-		client.close();
-	});
+		appendVote(vote);
+		
+		var res = new Buffer('OK');
+		var client = dgram.createSocket("udp4");
+
+		client.send(res, 0, res.length, rinfo.port, rinfo.host, function(err, bytes){
+			client.close();
+		});
+
+	}
+	catch(err)
+	{
+
+	}
 
 });
 
@@ -86,6 +95,36 @@ udpServer.bind(udp_config.port, udp_config.host);
 
 var http = require('http');
 var io = require('socket.io');
+var express = require('express');
+var cors = require('cors');
+
+var app = express();
+app.use(cors());
+
+app.get('/votes', function(req, res){
+
+	var value = {};
+
+	value = votes.has(req.query.curp) ? votes.get(req.query.curp) : value;
+	value = votes.has(req.query.phone) ? votes.get(req.query.phone) : value;
+
+	res.json(value);
+});
+
+app.get('/votes/all', function(req, res){
+	var values = [];
+
+	var all = 10;
+	var iterator = votes.values();
+	
+	for(var i = 0; i < all; i++){
+		values.push(iterator.next().value);
+	}
+
+	res.json(values);
+});
+
+app.listen(express_config.port);
 
 var static = require('node-static');
 var fileServer = new static.Server('./public');
