@@ -3,6 +3,7 @@ var config = require('./config.json');
 var udp_config = config.udp;
 var http_config = config.http;
 var express_config = config.express;
+var STEP = config.step;
 
 // Votation Dynamics
 
@@ -45,7 +46,9 @@ var appendVote = function(vote){
 		votation.votes[vote.party]++;
 	}
 
-	updateVote();
+	if(votation.total%STEP==0){
+		updateVote();	
+	}
 }
 
 setInterval(updateVote, 1000);
@@ -114,10 +117,10 @@ app.get('/votes', function(req, res){
 app.get('/votes/all', function(req, res){
 	var values = [];
 
-	var all = 10;
+	var last = 1000;
 	var iterator = votes.values();
 	
-	for(var i = 0; i < all; i++){
+	for(var i = 0; i < last; i++){
 		values.push(iterator.next().value);
 	}
 
